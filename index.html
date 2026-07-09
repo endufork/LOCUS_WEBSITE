@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>设备项目甘特图 / Equipment Gantt</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="topbar">
+          <div class="brand">
+            <div class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img">
+                <path d="M5 6.5h14M5 12h14M5 17.5h14" />
+                <path d="M8 4.5v4M15 10v4M11 15.5v4" />
+              </svg>
+            </div>
+            <div>
+              <h1 data-i18n="appTitle">设备项目甘特图</h1>
+              <p data-i18n="appSubtitle">非标设备排期工作台</p>
+            </div>
+          </div>
+
+          <div class="topbar-tools">
+            <div class="segmented" role="group" aria-label="Language">
+              <button type="button" class="segment active" data-lang="zh">中文</button>
+              <button type="button" class="segment" data-lang="en">EN</button>
+            </div>
+            <button type="button" class="button subtle" id="resetBtn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v6h6" /></svg>
+              <span data-i18n="resetSample">重置示例</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="actionbar" aria-label="Main toolbar">
+          <div class="actionbar-inner">
+            <div class="tool-group primary-group">
+              <button type="button" class="button primary" id="addTaskBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+                <span data-i18n="addTask">新增任务</span>
+              </button>
+            </div>
+            <div class="tool-group">
+              <button type="button" class="button" id="importBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0-12 4 4m-4-4-4 4M5 17v3h14v-3" /></svg>
+                <span data-i18n="importCsv">导入CSV</span>
+              </button>
+              <button type="button" class="button" id="importPngBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5zM8 15l2.5-3 2 2 2.5-4 2 5" /><path d="M12 8v6m0-6 2 2m-2-2-2 2" /></svg>
+                <span data-i18n="importPngRestore">导入PNG还原</span>
+              </button>
+            </div>
+            <div class="tool-group">
+              <button type="button" class="button" id="exportCsvBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5" /></svg>
+                <span data-i18n="exportCsv">导出CSV</span>
+              </button>
+              <button type="button" class="button" id="exportExcelBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9m0 12 4-4m-4 4-4-4M5 7V4h14v3" /></svg>
+                <span data-i18n="exportExcel">导出Excel</span>
+              </button>
+              <button type="button" class="button" id="exportPngBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5zM8 15l2.5-3 2 2 2.5-4 2 5" /></svg>
+                <span data-i18n="exportPng">导出PNG</span>
+              </button>
+              <button type="button" class="button" id="previewReportBtn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" /><path d="M12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" /></svg>
+                <span data-i18n="previewReport">汇报预览</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="project-panel" aria-label="Project information">
+          <div class="project-card project-card-main">
+            <label>
+              <span data-i18n="project">项目</span>
+              <input id="projectName" type="text" autocomplete="off" />
+            </label>
+            <label>
+              <span data-i18n="customer">客户</span>
+              <input id="customerName" type="text" autocomplete="off" />
+            </label>
+            <label>
+              <span data-i18n="delivery">交期</span>
+              <input id="deliveryDate" type="date" />
+            </label>
+            <div class="project-status">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="summaryText"></span>
+            </div>
+          </div>
+          <div class="project-card report-card">
+            <label>
+              <span data-i18n="companyName">公司</span>
+              <input id="companyName" type="text" autocomplete="off" />
+            </label>
+            <label class="logo-field">
+              <span data-i18n="companyLogo">Logo</span>
+              <input id="logoFile" type="file" accept="image/*" hidden />
+              <span class="logo-controls">
+                <button type="button" class="button" id="logoBtn" data-i18n="chooseLogo">选择Logo</button>
+                <button type="button" class="button subtle" id="clearLogoBtn" data-i18n="clearLogo">清除</button>
+                <span id="logoStatus" class="logo-status"></span>
+              </span>
+            </label>
+            <label>
+              <span data-i18n="projectCode">项目编号</span>
+              <input id="projectCode" type="text" autocomplete="off" />
+            </label>
+            <label>
+              <span data-i18n="reportVersion">版本</span>
+              <input id="reportVersion" type="text" autocomplete="off" />
+            </label>
+            <label>
+              <span data-i18n="updateDate">更新日期</span>
+              <input id="updateDate" type="date" />
+            </label>
+          </div>
+          <div class="project-card chart-card">
+            <label>
+              <span data-i18n="weekMode">周数</span>
+              <select id="weekMode">
+                <option value="iso" data-i18n="weekIso">ISO周</option>
+                <option value="natural" data-i18n="weekNatural">自然周</option>
+                <option value="project" data-i18n="weekProject">项目周</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="barLabel">条内文字</span>
+              <select id="barLabelMode">
+                <option value="none" data-i18n="barLabelNone">不显示</option>
+                <option value="phase" data-i18n="barLabelPhase">阶段</option>
+                <option value="dates" data-i18n="barLabelDates">日期</option>
+                <option value="progress" data-i18n="barLabelProgress">进度</option>
+              </select>
+            </label>
+            <div class="restore-hint">
+              <strong data-i18n="restoreHintTitle">PNG还原</strong>
+              <span data-i18n="restoreHintText">仅原始导出的 PNG 可还原，截图或压缩图片可能失效。</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="planner">
+          <div class="task-pane">
+            <div class="pane-header">
+              <div>
+                <h2 data-i18n="taskList">任务清单</h2>
+                <p data-i18n="taskHint">编辑表格或拖动右侧任务条调整日期</p>
+              </div>
+              <div class="shift-tools">
+                <input id="shiftDaysInput" type="number" value="7" step="1" />
+                <button type="button" class="button" id="shiftScheduleBtn">
+                  <span data-i18n="shiftSchedule">整体顺延</span>
+                </button>
+                <button type="button" class="button" id="appendTemplateBtn">
+                  <span data-i18n="appendTemplate">插入标准阶段</span>
+                </button>
+              </div>
+            </div>
+            <div class="task-table-wrap">
+              <table class="task-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="phase">阶段</th>
+                    <th data-i18n="owner">负责人</th>
+                    <th data-i18n="start">开始</th>
+                    <th data-i18n="end">结束</th>
+                    <th data-i18n="duration">工期</th>
+                    <th data-i18n="progress">进度</th>
+                    <th data-i18n="status">状态</th>
+                    <th aria-label="Actions"></th>
+                  </tr>
+                </thead>
+                <tbody id="taskBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="timeline-pane">
+            <div class="pane-header timeline-header">
+              <div>
+                <h2 data-i18n="timeline">甘特图</h2>
+                <p data-i18n="dragHint">条身移动，左右边缘调整工期，按天吸附</p>
+              </div>
+              <div class="legend">
+                <span><i class="legend-item design"></i><span data-i18n="legendDesign">设计</span></span>
+                <span><i class="legend-item supply"></i><span data-i18n="legendSupply">采购/加工</span></span>
+                <span><i class="legend-item build"></i><span data-i18n="legendBuild">装配/调试</span></span>
+                <span><i class="legend-item risk"></i><span data-i18n="legendRisk">风险</span></span>
+              </div>
+            </div>
+            <div id="warnings" class="warnings" hidden></div>
+            <div class="timeline-scroll" id="timelineScroll">
+              <div class="timeline-grid" id="timelineGrid"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <input id="csvFile" type="file" accept=".csv,text/csv" hidden />
+    <input id="pngFile" type="file" accept=".png,image/png" hidden />
+    <div class="preview-modal" id="previewModal" hidden>
+      <div class="preview-backdrop" id="previewBackdrop"></div>
+      <section class="preview-panel" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+        <header class="preview-header">
+          <div>
+            <h2 id="previewTitle" data-i18n="previewTitle">客户汇报预览</h2>
+            <p data-i18n="previewHint">这里显示导出 PNG 的实际版式</p>
+          </div>
+          <div class="preview-actions">
+            <button type="button" class="button" id="previewDownloadBtn">
+              <span data-i18n="downloadPreviewPng">下载PNG</span>
+            </button>
+            <button type="button" class="button subtle" id="previewCloseBtn">
+              <span data-i18n="closePreview">关闭</span>
+            </button>
+          </div>
+        </header>
+        <div class="preview-body">
+          <img id="previewImage" alt="Report preview" />
+        </div>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

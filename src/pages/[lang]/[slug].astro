@@ -1,0 +1,241 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { assets, company, pageKeys, pages, ui, type Lang, type PageKey } from "../../data/site";
+
+export function getStaticPaths() {
+  return ["zh", "en"].flatMap((lang) =>
+    pageKeys.map((slug) => ({ params: { lang, slug } }))
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const slug = Astro.params.slug as PageKey;
+const page: any = pages[lang][slug];
+const t = ui[lang];
+const isZh = lang === "zh";
+---
+
+<BaseLayout lang={lang} pageKey={slug} title={page.title} description={page.description}>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <h1>{page.heroTitle}</h1>
+      <p>{page.heroBody}</p>
+    </div>
+  </section>
+
+  {slug === "about" && (
+    <>
+      <section class="section">
+        <div class="container about-overview">
+          <div class="about-copy">
+            {page.body.map((text: string) => <p class="lead">{text}</p>)}
+          </div>
+          <div class="about-facts" aria-label={isZh ? "公司概览" : "Company facts"}>
+            <div><strong>2006</strong><span>{isZh ? "成立时间" : "Founded"}</span></div>
+            <div><strong>1200 m²</strong><span>{isZh ? "苏州厂房" : "Suzhou facility"}</span></div>
+            <div><strong>30</strong><span>{isZh ? "团队成员" : "Team members"}</span></div>
+            <div><strong>22</strong><span>{isZh ? "工程设计人员" : "Engineering designers"}</span></div>
+          </div>
+        </div>
+        <div class="container about-strengths">
+          {page.strengths.map(([title, body]: [string, string]) => (
+            <article>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section class="section alt">
+        <div class="container">
+          <div class="section-heading">
+            <h2>{isZh ? "发展历程" : "Development History"}</h2>
+          </div>
+          <div class="milestone-grid">
+            {page.timeline.map(([year, text]: [string, string]) => (
+              <article class="milestone-item">
+                <strong>{year}</strong>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {slug === "solutions" && (
+    <section class="section">
+      <div class="container">
+        <div class="solution-grid">
+          {page.cards.map(([title, body]: [string, string]) => (
+            <article class="card">
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {slug === "engineering" && (
+    <>
+      <section class="section">
+        <div class="container engineering-sticky-grid">
+          <aside class="sidebar-sticky">
+            <span class="row-label">{isZh ? "工程底座" : "Engineering Base"}</span>
+            <h2>{isZh ? "技术沉淀" : "Technical Foundation"}</h2>
+            <p class="lead">
+              {isZh
+                ? "围绕机械、电气、控制、检测和工艺集成拆解能力，让方案设计与制造现场保持一致。"
+                : "Capabilities are organized around mechanics, electrical control, inspection and process integration, so design decisions stay aligned with manufacturing sites."}
+            </p>
+            <div class="workflow compact">
+              {page.workflow.map((item: string) => <span>{item}</span>)}
+            </div>
+          </aside>
+          <div class="content-scroll">
+            {page.groups.map(([title, items]: [string, string[]]) => (
+              <section class="engineering-group-block">
+                <h3>{title}</h3>
+                <ul class="modern-list">
+                  {items.map((item) => <li>{item}</li>)}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section class="section alt">
+        <div class="container image-band">
+          <div class="section-heading">
+            <h2>{isZh ? "从需求评审到现场导入的项目流程" : "Project workflow from requirement review to site launch"}</h2>
+            <p class="lead">{isZh ? "项目流程以工程评审、详细设计、制造联调和现场验收为主线，确保每个阶段有明确输出。" : "The workflow connects engineering review, detailed design, build, debugging and acceptance with clear deliverables at each stage."}</p>
+          </div>
+          <figure class="media-frame">
+            <img src={assets.engineering} alt={isZh ? "工程布局截图" : "Engineering layout"} />
+          </figure>
+        </div>
+      </section>
+    </>
+  )}
+
+  {slug === "facilities" && (
+    <section class="section">
+      <div class="container image-band">
+        <div class="stack-grid">
+          {page.cards.map(([title, body]: [string, string]) => (
+            <article class="card">
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+        <figure class="media-frame">
+          <img src={assets.facility} alt={isZh ? "苏州制造与联调现场" : "Suzhou manufacturing and integration floor"} />
+        </figure>
+      </div>
+    </section>
+  )}
+
+  {slug === "customers" && (
+    <>
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <h2>{isZh ? "客户 Logo" : "Customer Logos"}</h2>
+            <p class="lead">{isZh ? "以下展示部分公开客户标识。" : "Selected public customer logos are shown below."}</p>
+          </div>
+          <div class="logo-wall">
+            {assets.customerLogos.map((src: string, index: number) => (
+              <figure>
+                <img src={src} alt={`Customer logo ${index + 1}`} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section class="section alt">
+        <div class="container">
+          <div class="section-heading">
+            <h2>{isZh ? "代表性项目类型" : "Representative Case Types"}</h2>
+          </div>
+          <div class="case-grid">
+            {page.cases.map(([title, body]: [string, string]) => (
+              <article class="card">
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {slug === "quality" && (
+    <>
+      <section class="section">
+        <div class="container">
+          <div class="system-grid">
+            {page.systems.map(([title, body]: [string, string]) => (
+              <article class="card">
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section class="section alt">
+        <div class="container quality-docs">
+          <div>
+            <h2>{isZh ? "证书、荣誉与专利" : "Certificates, Honors and Patents"}</h2>
+            <p class="lead">{page.certificates}</p>
+          </div>
+          <div class="doc-list">
+            <h3>{isZh ? "文档能力" : "Documentation Capability"}</h3>
+            <ul>
+              {page.docs.map((item: string) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="certificate-grid">
+            {assets.certificates.map((src: string, index: number) => (
+              <figure>
+                <img src={src} alt={`${isZh ? "证书荣誉" : "Certificate and honor"} ${index + 1}`} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {slug === "contact" && (
+    <section class="section">
+      <div class="container contact-panel">
+        <dl class="contact-list card">
+          <div><dt>{isZh ? "公司" : "Company"}</dt><dd>{company.enName}</dd></div>
+          <div><dt>{isZh ? "中文名称" : "Chinese Name"}</dt><dd>{company.zhName}</dd></div>
+          <div><dt>{isZh ? "地址" : "Address"}</dt><dd>{isZh ? company.addressZh : company.addressEn}</dd></div>
+          <div><dt>Tel</dt><dd>{company.tel}</dd></div>
+          <div><dt>Fax</dt><dd>{company.fax}</dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${company.email}`}>{company.email}</a></dd></div>
+          <div><dt>{isZh ? "墨西哥分公司" : "Mexico Branch"}</dt><dd>{company.mexicoBranch}, {isZh ? company.mexicoZh : company.mexicoEn}</dd></div>
+        </dl>
+        <article class="card">
+          <h3>{page.ctaTitle}</h3>
+          <p>{page.ctaBody}</p>
+          <div class="cta-row">
+            <a class="button primary" href={`mailto:${company.email}`}>{t.emailUs}</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  )}
+</BaseLayout>

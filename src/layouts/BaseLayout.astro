@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+import { assets, company, languages, nav, oppositeLang, pageHref, type Lang, type PageKey } from "../data/site";
+
+interface Props {
+  lang: Lang;
+  pageKey: PageKey;
+  title: string;
+  description: string;
+}
+
+const { lang, pageKey, title, description } = Astro.props;
+const otherLang = oppositeLang(lang);
+const otherHref = pageHref(otherLang, pageKey);
+---
+
+<!doctype html>
+<html lang={languages[lang].locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url.pathname} />
+    <link rel="icon" href={assets.logo} type="image/jpeg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href={pageHref(lang, "home")} aria-label={company.enName}>
+          <img class="brand-logo" src={assets.logo} alt={company.enName} />
+          <span>
+            <strong>{lang === "zh" ? company.zhName : company.enName}</strong>
+          </span>
+        </a>
+        <a class="language-link" href={otherHref}>{languages[otherLang].label}</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          {nav[lang].map((item) => (
+            <a href={item.href} class:list={{ active: item.key === pageKey, "nav-contact": item.key === "contact" }}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div>
+        <strong>{company.enName}</strong>
+        <p>{lang === "zh" ? "成立于 2006 年，交付制造现场使用的非标自动化设备。" : "Founded in 2006, Suzhou Locus Technology builds custom equipment for manufacturing sites."}</p>
+      </div>
+      <address>
+        <span>{lang === "zh" ? company.addressZh : company.addressEn}</span>
+        <span>{company.tel}</span>
+        <a href={`mailto:${company.email}`}>{company.email}</a>
+      </address>
+    </footer>
+  </body>
+</html>
