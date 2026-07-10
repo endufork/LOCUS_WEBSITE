@@ -30,7 +30,7 @@ const otherHref = pageHref(otherLang, pageKey);
       <div class="header-inner">
         <a class="brand" href={pageHref(lang, "home")} aria-label={company.enName}>
           <img class="brand-logo" src={assets.logo} alt={company.enName} />
-          <span>
+          <span class="brand-name">
             <strong>{lang === "zh" ? company.zhName : company.enName}</strong>
           </span>
         </a>

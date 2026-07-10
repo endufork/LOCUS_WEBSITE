@@ -12,15 +12,15 @@ const t = ui[lang];
 const narrativeLinks = [
   {
     href: `/${lang}/solutions/`,
-    label: lang === "zh" ? "查看核心业务" : "View Solutions"
+    label: lang === "zh" ? "核心业务" : "Solutions"
   },
   {
     href: `/${lang}/engineering/`,
-    label: lang === "zh" ? "了解技术能力" : "Explore Engineering"
+    label: lang === "zh" ? "技术能力" : "Engineering"
   },
   {
     href: `/${lang}/facilities/`,
-    label: lang === "zh" ? "查看交付能力" : "View Delivery Capability"
+    label: lang === "zh" ? "交付能力" : "Delivery"
   }
 ];
 ---
@@ -89,7 +89,7 @@ const narrativeLinks = [
         <h2>{pages[lang].customers.heroTitle}</h2>
         <p class="lead">{pages[lang].customers.heroBody}</p>
         <div class="cta-row">
-          <a class="button secondary" href={`/${lang}/customers/`}>{lang === "zh" ? "查看代表性项目" : "View Case Types"}</a>
+          <a class="button secondary" href={`/${lang}/customers/`}>{lang === "zh" ? "代表项目" : "Cases"}</a>
         </div>
       </div>
       <div class="logo-wall-mini" aria-label={lang === "zh" ? "客户标识" : "Customer logos"}>
@@ -109,8 +109,8 @@ const narrativeLinks = [
         <p class="lead">{page.bottomCta[1]}</p>
       </div>
       <div class="card">
-        <h3>{lang === "zh" ? "项目沟通建议" : "Project Review Inputs"}</h3>
-        <p>{lang === "zh" ? "请简述产品类型、当前工艺痛点、期望节拍（UPH）及交付周期，便于初步判断方案方向。" : "Share product type, current process pain points, target takt time (UPH), and expected timeline for an initial review."}</p>
+        <h3>{lang === "zh" ? "评估信息" : "Review Inputs"}</h3>
+        <p>{lang === "zh" ? "请提供产品类型、工艺痛点、目标 UPH 和交付周期。" : "Share product type, process pain points, target UPH and timeline."}</p>
         <div class="cta-row">
           <a class="button primary" href={`mailto:ronghao@jinxiangsz.com`}>{t.emailUs}</a>
         </div>

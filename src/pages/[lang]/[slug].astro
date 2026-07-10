@@ -49,7 +49,7 @@ const isZh = lang === "zh";
       <section class="section alt">
         <div class="container">
           <div class="section-heading">
-            <h2>{isZh ? "发展历程" : "Development History"}</h2>
+            <h2>{isZh ? "发展历程" : "Milestones"}</h2>
           </div>
           <div class="milestone-grid">
             {page.timeline.map(([year, text]: [string, string]) => (
@@ -84,12 +84,12 @@ const isZh = lang === "zh";
       <section class="section">
         <div class="container engineering-sticky-grid">
           <aside class="sidebar-sticky">
-            <span class="row-label">{isZh ? "工程底座" : "Engineering Base"}</span>
-            <h2>{isZh ? "技术沉淀" : "Technical Foundation"}</h2>
+            <span class="row-label">{isZh ? "工程" : "Engineering"}</span>
+            <h2>{isZh ? "核心能力" : "Core Capabilities"}</h2>
             <p class="lead">
               {isZh
-                ? "围绕机械、电气、控制、检测和工艺集成拆解能力，让方案设计与制造现场保持一致。"
-                : "Capabilities are organized around mechanics, electrical control, inspection and process integration, so design decisions stay aligned with manufacturing sites."}
+                ? "围绕机械、电气、控制、检测和工艺集成组织工程能力。"
+                : "Engineering capabilities across mechanics, controls, inspection and process integration."}
             </p>
             <div class="workflow compact">
               {page.workflow.map((item: string) => <span>{item}</span>)}
@@ -110,8 +110,8 @@ const isZh = lang === "zh";
       <section class="section alt">
         <div class="container image-band">
           <div class="section-heading">
-            <h2>{isZh ? "从需求评审到现场导入的项目流程" : "Project workflow from requirement review to site launch"}</h2>
-            <p class="lead">{isZh ? "项目流程以工程评审、详细设计、制造联调和现场验收为主线，确保每个阶段有明确输出。" : "The workflow connects engineering review, detailed design, build, debugging and acceptance with clear deliverables at each stage."}</p>
+            <h2>{isZh ? "项目流程" : "Project Workflow"}</h2>
+            <p class="lead">{isZh ? "从工程评审、详细设计到制造联调和现场验收，每个阶段都有明确输出。" : "From review and design to build, debugging and site acceptance, each stage has clear deliverables."}</p>
           </div>
           <figure class="media-frame">
             <img src={assets.engineering} alt={isZh ? "工程布局截图" : "Engineering layout"} />
@@ -144,8 +144,8 @@ const isZh = lang === "zh";
       <section class="section">
         <div class="container">
           <div class="section-heading">
-            <h2>{isZh ? "客户 Logo" : "Customer Logos"}</h2>
-            <p class="lead">{isZh ? "以下展示部分公开客户标识。" : "Selected public customer logos are shown below."}</p>
+            <h2>{isZh ? "客户标识" : "Customer Logos"}</h2>
+            <p class="lead">{isZh ? "部分公开客户标识。" : "Selected public customer logos."}</p>
           </div>
           <div class="logo-wall">
             {assets.customerLogos.map((src: string, index: number) => (
@@ -159,7 +159,7 @@ const isZh = lang === "zh";
       <section class="section alt">
         <div class="container">
           <div class="section-heading">
-            <h2>{isZh ? "代表性项目类型" : "Representative Case Types"}</h2>
+            <h2>{isZh ? "代表项目" : "Representative Cases"}</h2>
           </div>
           <div class="case-grid">
             {page.cases.map(([title, body]: [string, string]) => (
@@ -191,11 +191,11 @@ const isZh = lang === "zh";
       <section class="section alt">
         <div class="container quality-docs">
           <div>
-            <h2>{isZh ? "证书、荣誉与专利" : "Certificates, Honors and Patents"}</h2>
+            <h2>{isZh ? "证书与专利" : "Certificates & Patents"}</h2>
             <p class="lead">{page.certificates}</p>
           </div>
           <div class="doc-list">
-            <h3>{isZh ? "文档能力" : "Documentation Capability"}</h3>
+            <h3>{isZh ? "交付文档" : "Delivery Documents"}</h3>
             <ul>
               {page.docs.map((item: string) => <li>{item}</li>)}
             </ul>
