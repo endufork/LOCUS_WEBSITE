@@ -87,7 +87,8 @@ export const assets = {
     "/assets/site/customers/customer-16.jpeg",
     "/assets/site/customers/customer-17.jpeg",
     "/assets/site/customers/customer-18.png",
-    "/assets/site/customers/customer-19.png"
+    "/assets/site/customers/customer-19.png",
+    "/assets/site/customers/customer-20.png"
   ],
   certificates: [
     "/assets/site/certificates/certificate-01.png",
