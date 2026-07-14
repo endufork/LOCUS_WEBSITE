@@ -56,7 +56,7 @@ export const assets = {
   homeHero: "/assets/site/home-hero.jpeg",
   hero: "/assets/site/hero-production-line.png",
   facility: "/assets/site/facility-floor.jpeg",
-  globalMap: "/assets/site/global-delivery-map.png",
+  globalMap: "/assets/site/global-delivery-map-20260713.png",
   processImages: [
     "/assets/site/process-079.jpeg",
     "/assets/site/process-072.jpeg",
@@ -93,7 +93,7 @@ export const assets = {
   certificates: [
     "/assets/site/certificates/certificate-01.png",
     "/assets/site/certificates/certificate-02.jpeg",
-    "/assets/site/certificates/certificate-03.jpeg",
+    "/assets/site/certificates/certificate-high-tech-2025.jpeg",
     "/assets/site/certificates/certificate-04.jpeg",
     "/assets/site/certificates/certificate-05.jpeg",
     "/assets/site/certificates/certificate-06.png",
